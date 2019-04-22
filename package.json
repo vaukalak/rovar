@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint App.js",
+    "lint:fix": "npm run lint -- --fix",
+    "storybook": "storybook start -p 7007"
   },
   "dependencies": {
     "color": "^3.1.0",
@@ -16,9 +19,23 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/runtime": "^7.4.3",
+    "@storybook/addon-actions": "^5.0.7",
+    "@storybook/addon-links": "^5.0.7",
+    "@storybook/addons": "^5.0.7",
+    "@storybook/react-native": "^3.4.12",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
+    "babel-runtime": "^6.26.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "jest": "^24.7.1",
     "metro-react-native-babel-preset": "^0.53.1",
+    "prop-types": "^15.7.2",
+    "react-dom": "16.8.3",
     "react-test-renderer": "16.8.3"
   },
   "jest": {

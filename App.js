@@ -1,80 +1,77 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
-import colorParser from 'color';
-import Touchable from './lib/Touchable';
-
-const { add, debug, concat, interpolate, multiply, color, round, sub } = Animated;
-
-const interpolateColor = (anim, from, to) => {
-  const colorFrom = colorParser(from).object();
-  const colorTo = colorParser(to).object();
-  return color(
-    round(interpolate(anim, {
-      inputRange: [0, 1],
-      outputRange: [colorFrom.r, colorTo.r],
-    })),
-    round(interpolate(anim, {
-      inputRange: [0, 1],
-      outputRange: [colorFrom.g, colorTo.g],
-    })),
-    round(interpolate(anim, {
-      inputRange: [0, 1],
-      outputRange: [colorFrom.b, colorTo.b],
-    })),
-  );
-};
+import FlipAndTintTouchable from './FlipAndTintTouchable';
+import CirclePressTouchable from './CirclePressTouchable';
+import TouchableOpacity from './TouchableOpacity';
 
 const easing = Easing.out(Easing.back(1));
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#EEEEEE',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    padding: 10,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  label: {
+    fontSize: 26,
+    fontWeight: 'bold',
+  },
+});
+
 const App = () => {
+  const [handlers] = useState(() => ({
+    onPressIn: () => { console.log('onPressIn'); },
+    onPressOut: () => { console.log('onPressOut'); },
+    onPress: () => { console.log('onPress'); },
+  }));
   return (
-    <View style={{ flex: 1, alignItems: 'center', paddingTop: 100 }}>
-      <Touchable easing={easing} duration={400}>
-        {({ anim, constrainedAnim }) => (
-          <Animated.View
-            style={{
-              backgroundColor: interpolateColor(
-                constrainedAnim,
-                '#FFFFFF',
-                '#000000',
-              ),
-              borderWidth: 1,
-              borderColor: 'black',
-              width: 200,
-              height: 60,
-              borderRadius: 5,
-              transform: [
-                { scale: sub(1, multiply(anim, 0.02)) },
-                { rotate: concat(multiply(anim, 180), 'deg') },
-              ],
-              justifyContent: 'space-around',
-              alignItems: 'center',
-            }}
-          >
-            <Animated.Text
-              style={{
-                color: interpolateColor(
-                  constrainedAnim,
-                  '#000000',
-                  '#FFFFFF',
-                ),
-                transform: [
-                  { rotate: concat(multiply(anim, -180), 'deg') },
-                  { perspective: 100 },
-                  { rotateX: concat(multiply(constrainedAnim, 360), 'deg') },
-                ],
-                fontSize: 26,
-                fontWeight: 'bold',
-              }}
-            >
-              HELLO THERE
-            </Animated.Text>
-          </Animated.View>
-        )}
-      </Touchable>
+    <View style={styles.container}>
+      <TouchableOpacity
+        easing={easing}
+        duration={200}
+        {...handlers}
+      >
+        <Animated.View style={styles.button}>
+          <Animated.Text style={styles.label}>
+            TOUCHABLE OPACITY
+          </Animated.Text>
+        </Animated.View>
+      </TouchableOpacity>
+      <FlipAndTintTouchable
+        easing={easing}
+        duration={400}
+        {...handlers}
+      >
+        <Animated.View style={styles.button}>
+          <Animated.Text style={styles.label}>
+            GO
+          </Animated.Text>
+        </Animated.View>
+      </FlipAndTintTouchable>
+      <CirclePressTouchable
+        easing={easing}
+        duration={400}
+        {...handlers}
+      >
+        <Animated.View style={styles.button}>
+          <Animated.Text style={styles.label}>
+            HELLO THERE
+          </Animated.Text>
+        </Animated.View>
+      </CirclePressTouchable>
     </View>
   );
-}
+};
 
 export default App;
