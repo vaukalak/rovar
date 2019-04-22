@@ -6,8 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "lint": "eslint App.js",
-    "lint:fix": "npm run lint -- --fix",
-    "storybook": "storybook start -p 7007"
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "color": "^3.1.0",
@@ -19,10 +18,6 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/runtime": "^7.4.3",
-    "@storybook/addon-actions": "^5.0.7",
-    "@storybook/addon-links": "^5.0.7",
-    "@storybook/addons": "^5.0.7",
-    "@storybook/react-native": "^3.4.12",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
