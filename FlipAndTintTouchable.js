@@ -5,7 +5,14 @@ import Touchable from './lib/Touchable';
 
 const { concat, multiply, sub } = Animated;
 
-const FlipAndTintTouchable = ({ children, ...touchableProps }) => {
+const FlipAndTintTouchable = ({
+  children,
+  backgroundColor,
+  backgroundTintColor,
+  textColor,
+  textTintColor,
+  ...touchableProps,
+}) => {
   React.Children.only(children);
   return (
     <Touchable {...touchableProps}>
@@ -23,8 +30,8 @@ const FlipAndTintTouchable = ({ children, ...touchableProps }) => {
               {
                 backgroundColor: interpolateColor(
                   constrainedAnim,
-                  '#FFFFFF',
-                  '#000000',
+                  backgroundColor,
+                  backgroundTintColor,
                 ),
                 transform: [
                   { scale: sub(1, multiply(anim, 0.02)) },
@@ -42,8 +49,8 @@ const FlipAndTintTouchable = ({ children, ...touchableProps }) => {
                 {
                   color: interpolateColor(
                     constrainedAnim,
-                    '#000000',
-                    '#FFFFFF',
+                    textColor,
+                    textTintColor,
                   ),
                   transform: [
                     { rotate: concat(multiply(anim, -180), 'deg') },

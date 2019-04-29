@@ -1,59 +1,41 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Animated from 'react-native-reanimated';
-import Touchable from './lib/Touchable';
+import createTouchableComponent from './lib/createTouchableComponent';
+import useOnLayout from './lib/useOnLayout';
+import Circle from './lib/Circle';
+import mergeStyles from './lib/mergeStyles';
 
-const { max, multiply, sub, divide } = Animated;
+const { max, multiply, divide } = Animated;
 
-const FlipAndTintTouchable = ({ children, ...touchableProps }) => {
-  React.Children.only(children);
-  const layoutWidth = useMemo(() => new Animated.Value(0), []);
-  const layoutHeight = useMemo(() => new Animated.Value(0), []);
-  return (
-    <Touchable {...touchableProps}>
-      {({ anim, constrainedAnim, x, y }) => {
-        const { style, children: subChildren, ...childProps } = children.props;
-        React.Children.only(subChildren);
-
-        const size = multiply(max(layoutWidth, layoutHeight), anim, 2);
-
-        return React.cloneElement(
-          children,
-          {
-            ...childProps,
-            onLayout: ({ nativeEvent }) => {
-              layoutWidth.setValue(nativeEvent.layout.width);
-              layoutHeight.setValue(nativeEvent.layout.height);
-            },
-            style: [
-              {
-                overflow: 'hidden',
-                transform: [
-                  { scale: sub(1, multiply(anim, 0.01)) },
-                  { translateY: multiply(anim, 2) },
-                ]
-              },
-              style,
-            ],
-          },
-          [
-            <Animated.View
-              key="circle"
-              style={{
-                position: 'absolute',
-                top: sub(y, divide(size, 2)),
-                left: sub(x, divide(size, 2)),
-                width: size,
-                height: size,
-                borderRadius: divide(size, 2),
-                backgroundColor: 'rgba(240, 208, 0, 0.7)',
-              }}
-            />,
-            subChildren
-          ],
-        )
-      }}
-    </Touchable>
+const childrenEnhancer = (children, props, animationState) => {
+  const { children: subChildren, ...childrenProps } = children.props;
+  const { anim, x, y } = animationState;
+  const {
+    layoutWidth,
+    layoutHeight,
+    onLayout,
+  } = useOnLayout();
+  const size = multiply(max(layoutWidth, layoutHeight), anim, 2);
+  return React.cloneElement(
+    children,
+    {
+      ...childrenProps,
+      onLayout,
+      style: mergeStyles(
+        childrenProps.style,
+        { overflow: 'hidden' },
+      ),
+    },
+    <>
+      <Circle
+        radius={divide(size, 2)}
+        x={x}
+        y={y}
+      />
+      {subChildren}
+    </>
   );
 };
 
-export default FlipAndTintTouchable;
+export default createTouchableComponent(childrenEnhancer);
+
