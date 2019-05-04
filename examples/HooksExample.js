@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import EnhancedTouchable from '../lib/EnhancedTouchable';
 import { backgroundColorStyleCreator } from '../lib/enhancers/styles/backgroundColorEnhancer';
+import { borderRadiusStyleCreator } from '../lib/enhancers/styles/borderRadiusEnhancer';
 import { scaleStyleCreator } from '../lib/enhancers/styles/scaleEnhancer';
 import styleEnhancer from '../lib/enhancers/styleEnhancer';
 
@@ -34,6 +35,7 @@ const Button = ({ onPress, enabled = true, children }) => {
   const enhancer = useMemo(
     () => styleEnhancer(
       scaleStyleCreator(0.97),
+      borderRadiusStyleCreator([0, 10]),
       backgroundColorStyleCreator(
         enabled ?
           ['#FFFFFF', 'rgba(240, 208, 0, 0.7)'] :
