@@ -5601,6 +5601,11 @@ react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
+react-use-handler@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/react-use-handler/-/react-use-handler-1.1.0.tgz#5dd15f3e10058a0ceae16db013b94745a760ac91"
+  integrity sha512-gKzOcLdcmr8TOiqAgF98X0fJrfCGxHM3aaS+9XnbEzBC1dRtr2cffzfYu52X7uKZF1QYwoaskc0pSVRbJ7hIfQ==
+
 react@16.8.3:
   version "16.8.3"
   resolved "https://registry.npmjs.org/react/-/react-16.8.3.tgz#c6f988a2ce895375de216edcfaedd6b9a76451d9"
