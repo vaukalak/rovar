@@ -1,13 +1,16 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import EnhancedTouchable from '../lib/EnhancedTouchable';
 import { backgroundColorStyleCreator } from '../lib/enhancers/styles/backgroundColorEnhancer';
-import { borderRadiusStyleCreator } from '../lib/enhancers/styles/borderRadiusEnhancer';
 import { scaleStyleCreator } from '../lib/enhancers/styles/scaleEnhancer';
 import styleEnhancer from '../lib/enhancers/styleEnhancer';
+import touchEnhancer from '../lib/enhancers/touchEnhancer';
+import compose from '../lib/compose';
+import disabledEnhancer from '../lib/enhancers/disabledEnhancer';
+import { opacityStyleCreator } from '../lib/enhancers/styles/opacityEnhancer';
 
-const easing = Easing.out(Easing.back(1));
+const easing = Easing.out(Easing.ease);
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +23,7 @@ const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderColor: 'black',
+    backgroundColor: '#FFFFFF',
     padding: 10,
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -32,17 +36,25 @@ const styles = StyleSheet.create({
 });
 
 const Button = ({ onPress, enabled = true, children }) => {
-  const enhancer = useMemo(
-    () => styleEnhancer(
-      scaleStyleCreator(0.97),
-      borderRadiusStyleCreator([0, 10]),
-      backgroundColorStyleCreator(
-        enabled ?
-          ['#FFFFFF', 'rgba(240, 208, 0, 0.7)'] :
-          ['#CCCCCC', '#AAAAAA']
-      )
+  const [enhancer] = useState(
+    () => compose(
+      touchEnhancer(
+        styleEnhancer(
+          backgroundColorStyleCreator(
+            'rgba(240, 208, 0, 0.7)',
+          ),
+          scaleStyleCreator(0.95),
+        ),
+      ),
+      disabledEnhancer(
+        styleEnhancer(
+          backgroundColorStyleCreator(
+            '#AAAAAA',
+          ),
+          opacityStyleCreator(0.6),
+        ),
+      ),
     ),
-    [enabled],
   );
   return (
     <EnhancedTouchable
