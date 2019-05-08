@@ -45,7 +45,7 @@ const CircleAnimationTouchable = createTouchableComponent(
       styleEnhancer(
         scaleStyleCreator(0.95),
         translateStyleCreator(3),
-        colorStyleCreator(['#000000', '#FFFFFF']),
+        colorStyleCreator('#FFFFFF'),
       ),
     ),
     circleAnimationEnhancer('#8f0013'),
@@ -68,8 +68,8 @@ const FlipAndTintTouchable = createTouchableComponent(
     ),
     firstChildEnhancer(
       styleEnhancer(
-        colorStyleCreator(['#000000', '#FFFFFF']),
-        scaleStyleCreator(0.9),
+        colorStyleCreator('#FFFFFF'),
+        scaleStyleCreator(0.5),
         rotateStyleCreator(-20),
       ),
     ),

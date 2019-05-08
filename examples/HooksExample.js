@@ -9,6 +9,7 @@ import touchEnhancer from '../lib/enhancers/touchEnhancer';
 import compose from '../lib/compose';
 import disabledEnhancer from '../lib/enhancers/disabledEnhancer';
 import { opacityStyleCreator } from '../lib/enhancers/styles/opacityEnhancer';
+import Checkbox from '../lib/Checkbox';
 
 const easing = Easing.out(Easing.ease);
 
@@ -43,7 +44,7 @@ const Button = ({ onPress, enabled = true, children }) => {
           backgroundColorStyleCreator(
             'rgba(240, 208, 0, 0.7)',
           ),
-          scaleStyleCreator(0.95),
+          scaleStyleCreator(1, 0.95),
         ),
       ),
       disabledEnhancer(
@@ -97,6 +98,18 @@ const HooksTouchableExamples = () => {
         {`ENABLE FIRST\n`}
         {!firstEnabled ? `(ENABLED)` : `(DISABLED)`}
       </Button>
+      <Checkbox>
+        <Animated.View style={{ borderColor: 'black', borderWidth: 1, backgroundColor: '#FFFFFF', width: 100, height: 100 }}>
+          <Animated.View
+            key="icon"
+            style={{
+              backgroundColor: 'white',
+              flex: 1,
+              margin: 20,
+            }}
+          />
+        </Animated.View>
+      </Checkbox>
     </View>
   );
 
