@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
 const CircleAnimationTouchable = createTouchableComponent(
   compose(
     styleEnhancer(
-      scaleStyleCreator(0.95),
+      scaleStyleCreator(1, 0.95),
     ),
     firstChildEnhancer(
       styleEnhancer(
-        scaleStyleCreator(0.95),
+        scaleStyleCreator(1, 0.95),
         translateStyleCreator(3),
         colorStyleCreator('#FFFFFF'),
       ),
@@ -55,21 +55,21 @@ const CircleAnimationTouchable = createTouchableComponent(
 const ScaleOpacityTouchable = createTouchableComponent(
   styleEnhancer(
     opacityStyleCreator(0.4),
-    scaleStyleCreator(0.97),
+    scaleStyleCreator(1, 0.97),
   ),
 );
 
 const FlipAndTintTouchable = createTouchableComponent(
   compose(
     styleEnhancer(
-      scaleStyleCreator(1.2),
+      scaleStyleCreator(1, 1.2),
       backgroundColorStyleCreator(),
       rotateStyleCreator(10),
     ),
     firstChildEnhancer(
       styleEnhancer(
         colorStyleCreator('#FFFFFF'),
-        scaleStyleCreator(0.5),
+        scaleStyleCreator(1, 0.5),
         rotateStyleCreator(-20),
       ),
     ),

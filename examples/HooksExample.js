@@ -43,7 +43,7 @@ const Button = ({ onPress, enabled = true, children }) => {
           backgroundColorStyleCreator(
             'rgba(240, 208, 0, 0.7)',
           ),
-          opacityStyleCreator(0.6),
+          opacityStyleCreator(0.9),
         ),
       ),
       disabledEnhancer(
@@ -110,7 +110,7 @@ const HooksTouchableExamples = () => {
               StyleSheet.absoluteFill,
               {
                 borderColor: 'black',
-                borderWidth: 1,
+                borderWidth: 3,
                 backgroundColor: '#FFFFFF',
                 borderRadius: 5,
               },
@@ -119,10 +119,10 @@ const HooksTouchableExamples = () => {
           <Animated.View
             key="icon"
             style={{
-              backgroundColor: 'white',
+              backgroundColor: 'black',
               flex: 1,
               borderRadius: 5,
-              margin: 6,
+              margin: 8,
             }}
           />
         </Animated.View>
