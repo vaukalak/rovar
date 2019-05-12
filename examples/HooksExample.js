@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import EnhancedTouchable from '../lib/EnhancedTouchable';
 import { backgroundColorStyleCreator } from '../lib/enhancers/styles/backgroundColorEnhancer';
-import { scaleStyleCreator } from '../lib/enhancers/styles/scaleEnhancer';
 import styleEnhancer from '../lib/enhancers/styleEnhancer';
 import touchEnhancer from '../lib/enhancers/touchEnhancer';
 import compose from '../lib/compose';
@@ -44,7 +43,7 @@ const Button = ({ onPress, enabled = true, children }) => {
           backgroundColorStyleCreator(
             'rgba(240, 208, 0, 0.7)',
           ),
-          scaleStyleCreator(1, 0.95),
+          opacityStyleCreator(0.6),
         ),
       ),
       disabledEnhancer(
@@ -99,13 +98,31 @@ const HooksTouchableExamples = () => {
         {!firstEnabled ? `(ENABLED)` : `(DISABLED)`}
       </Button>
       <Checkbox>
-        <Animated.View style={{ borderColor: 'black', borderWidth: 1, backgroundColor: '#FFFFFF', width: 100, height: 100 }}>
+        <Animated.View
+          style={{
+            width: 36,
+            height: 36,
+          }}
+        >
+          <Animated.View
+            key="background"
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                borderColor: 'black',
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF',
+                borderRadius: 5,
+              },
+            ]}
+          />
           <Animated.View
             key="icon"
             style={{
               backgroundColor: 'white',
               flex: 1,
-              margin: 20,
+              borderRadius: 5,
+              margin: 6,
             }}
           />
         </Animated.View>
