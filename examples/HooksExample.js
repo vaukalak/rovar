@@ -1,16 +1,23 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
-import EnhancedTouchable from '../lib/EnhancedTouchable';
+import Touchable from '../lib/components/Touchable';
 import { backgroundColorStyleCreator } from '../lib/enhancers/styles/backgroundColorEnhancer';
 import styleEnhancer from '../lib/enhancers/styleEnhancer';
 import touchEnhancer from '../lib/enhancers/touchEnhancer';
 import compose from '../lib/compose';
 import disabledEnhancer from '../lib/enhancers/disabledEnhancer';
 import { opacityStyleCreator } from '../lib/enhancers/styles/opacityEnhancer';
-import Checkbox from '../lib/Checkbox';
+import selectedEnhancer from '../lib/enhancers/selectedEnhancer';
+import getChildEnhancer from '../lib/enhancers/getChildEnhancer';
+import {rotateStyleCreator} from '../lib/enhancers/styles/rotateEnhancer';
+import {scaleStyleCreator} from '../lib/enhancers/styles/scaleEnhancer';
+import conditionalColor from '../lib/utils/colors/conditionalColor';
+import Checkbox from '../lib/components/Checkbox';
 
 const easing = Easing.out(Easing.ease);
+
+const { clockRunning, or } = Animated;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +42,62 @@ const styles = StyleSheet.create({
   },
 });
 
+const GreenCheckbox = ({ onPress, enabled = true, children }) => {
+  const enhancer = useMemo(
+    () => compose(
+      selectedEnhancer(
+        compose(
+          getChildEnhancer('background')(
+            styleEnhancer(
+              backgroundColorStyleCreator('rgba(0, 150, 3)'),
+              rotateStyleCreator(180),
+            ),
+          ),
+          getChildEnhancer('icon')(
+            styleEnhancer(
+              scaleStyleCreator(0, 1),
+            ),
+          ),
+        ),
+      ),
+      touchEnhancer(
+        compose(
+          getChildEnhancer('background')(
+            styleEnhancer(
+              backgroundColorStyleCreator(
+                ({ selectedAnimation }) =>
+                  conditionalColor(
+                    or(
+                      selectedAnimation.transitionState.endState,
+                      clockRunning(selectedAnimation.transitionState.clockOut),
+                    ),
+                    'rgba(0, 150, 3)',
+                    'rgba(0, 122, 2)',
+                  ),
+              ),
+            ),
+          ),
+          styleEnhancer(
+            scaleStyleCreator(1, 0.9),
+          ),
+        ),
+      ),
+    ),
+    []
+  );
+
+  return (
+    <Checkbox
+      easing={Easing.in(Easing.elastic(1))}
+      enhancer={enhancer}
+      onPress={onPress}
+      enabled={enhancer}
+    >
+      {children}
+    </Checkbox>
+  )
+};
+
 const Button = ({ onPress, enabled = true, children }) => {
   const [enhancer] = useState(
     () => compose(
@@ -57,7 +120,7 @@ const Button = ({ onPress, enabled = true, children }) => {
     ),
   );
   return (
-    <EnhancedTouchable
+    <Touchable
       enabled={enabled}
       easing={easing}
       duration={500}
@@ -69,7 +132,7 @@ const Button = ({ onPress, enabled = true, children }) => {
           {children}
         </Animated.Text>
       </Animated.View>
-    </EnhancedTouchable>
+    </Touchable>
   );
 };
 
@@ -97,7 +160,7 @@ const HooksTouchableExamples = () => {
         {`ENABLE FIRST\n`}
         {!firstEnabled ? `(ENABLED)` : `(DISABLED)`}
       </Button>
-      <Checkbox>
+      <GreenCheckbox>
         <Animated.View
           style={{
             width: 36,
@@ -126,7 +189,7 @@ const HooksTouchableExamples = () => {
             }}
           />
         </Animated.View>
-      </Checkbox>
+      </GreenCheckbox>
     </View>
   );
 

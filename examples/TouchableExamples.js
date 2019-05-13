@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
-import createTouchableComponent from '../lib/createTouchableComponent';
 import circleAnimationEnhancer from '../lib/enhancers/circleAnimationEnhancer';
 import { backgroundColorStyleCreator } from '../lib/enhancers/styles/backgroundColorEnhancer';
 import { colorStyleCreator } from '../lib/enhancers/styles/colorStyleEnhancer';
@@ -12,6 +11,8 @@ import { scaleStyleCreator } from '../lib/enhancers/styles/scaleEnhancer';
 import compose from '../lib/compose';
 import styleEnhancer from '../lib/enhancers/styleEnhancer';
 import {translateStyleCreator} from '../lib/enhancers/styles/translateEnhancer';
+import { createTouchableComponent } from '../lib/components/Touchable';
+import touchEnhancer from '../lib/enhancers/touchEnhancer';
 
 const easing = Easing.out(Easing.back(1));
 
@@ -37,46 +38,52 @@ const styles = StyleSheet.create({
 });
 
 const CircleAnimationTouchable = createTouchableComponent(
-  compose(
-    styleEnhancer(
-      scaleStyleCreator(1, 0.95),
-    ),
-    firstChildEnhancer(
+  touchEnhancer(
+    compose(
       styleEnhancer(
         scaleStyleCreator(1, 0.95),
-        translateStyleCreator(3),
-        colorStyleCreator('#FFFFFF'),
       ),
+      firstChildEnhancer(
+        styleEnhancer(
+          scaleStyleCreator(1, 0.95),
+          translateStyleCreator(3),
+          colorStyleCreator('#FFFFFF'),
+        ),
+      ),
+      circleAnimationEnhancer('#8f0013'),
     ),
-    circleAnimationEnhancer('#8f0013'),
   ),
 );
 
 const ScaleOpacityTouchable = createTouchableComponent(
-  styleEnhancer(
-    opacityStyleCreator(0.4),
-    scaleStyleCreator(1, 0.97),
+  touchEnhancer(
+    styleEnhancer(
+      opacityStyleCreator(0.4),
+      scaleStyleCreator(1, 0.97),
+    ),
   ),
 );
 
 const FlipAndTintTouchable = createTouchableComponent(
-  compose(
-    styleEnhancer(
-      scaleStyleCreator(1, 1.2),
-      backgroundColorStyleCreator(),
-      rotateStyleCreator(10),
-    ),
-    firstChildEnhancer(
+  touchEnhancer(
+    compose(
       styleEnhancer(
-        colorStyleCreator('#FFFFFF'),
-        scaleStyleCreator(1, 0.5),
-        rotateStyleCreator(-20),
+        scaleStyleCreator(1, 1.2),
+        backgroundColorStyleCreator(),
+        rotateStyleCreator(10),
+      ),
+      firstChildEnhancer(
+        styleEnhancer(
+          colorStyleCreator('#FFFFFF'),
+          scaleStyleCreator(1, 0.5),
+          rotateStyleCreator(-20),
+        ),
       ),
     ),
   ),
 );
 
-const CreateTouchableExamples = () => {
+const TouchableExamples = () => {
   const [handlers] = useState(() => ({
     onPressIn: () => { console.log('onPressIn'); },
     onPressOut: () => { console.log('onPressOut'); },
@@ -140,4 +147,4 @@ const CreateTouchableExamples = () => {
   );
 };
 
-export default CreateTouchableExamples;
+export default TouchableExamples;

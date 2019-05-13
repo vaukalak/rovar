@@ -1,4 +1,4 @@
-// import Example from './CreateTouchableExamples';
+// import Example from './TouchableExamples';
 import Example from './HooksExample';
 
 export default Example;
