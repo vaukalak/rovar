@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
+import { View, TextInput as RNTextInput, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import Touchable from '../lib/components/Touchable';
+import TextInput from '../lib/components/TextInput';
 import { backgroundColorStyleCreator } from '../lib/enhancers/styles/backgroundColorEnhancer';
 import styleEnhancer from '../lib/enhancers/styleEnhancer';
 import touchEnhancer from '../lib/enhancers/touchEnhancer';
@@ -14,6 +15,8 @@ import {rotateStyleCreator} from '../lib/enhancers/styles/rotateEnhancer';
 import {scaleStyleCreator} from '../lib/enhancers/styles/scaleEnhancer';
 import conditionalColor from '../lib/utils/colors/conditionalColor';
 import Checkbox from '../lib/components/Checkbox';
+import expandedEnhancer from '../lib/enhancers/expandedEnhancer';
+import {translateStyleCreator} from '../lib/enhancers/styles/translateEnhancer';
 
 const easing = Easing.out(Easing.ease);
 
@@ -96,6 +99,75 @@ const GreenCheckbox = ({ onPress, enabled = true, children }) => {
       {children}
     </Checkbox>
   )
+};
+
+const Input = () => {
+  const [enhancer] = useState(
+    () => compose(
+      expandedEnhancer(
+        compose(
+          getChildEnhancer('label')(
+            styleEnhancer(
+              scaleStyleCreator(1, 0.5, 'left'),
+              translateStyleCreator(-20),
+            ),
+          ),
+        ),
+      ),
+      selectedEnhancer(
+        compose(
+          styleEnhancer(
+            backgroundColorStyleCreator(
+              'rgba(240, 208, 0, 0.7)',
+            ),
+            opacityStyleCreator(0.9),
+          ),
+          getChildEnhancer('bottomLine')(
+            styleEnhancer(
+              scaleStyleCreator(0, 1, 'left'),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+  return (
+    <TextInput
+      enabled
+      easing={easing}
+      duration={500}
+      enhancer={enhancer}
+      onPress={() => {}}
+    >
+      {(inputProps) => (
+        <Animated.View
+          pointerEvents={'box-only'}
+        >
+          <RNTextInput
+            style={{ fontSize: 16, height: 16, marginTop: 14, width: 200 }}
+            {...inputProps}
+          />
+          <Animated.Text
+            key="label"
+            style={{ fontSize: 26, position: 'absolute' }}
+          >
+            INPUT BRO
+          </Animated.Text>
+          <Animated.View
+            key={'bottomLine'}
+            style={{
+              backgroundColor: 'black',
+              position: 'absolute',
+              height: 1,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        </Animated.View>
+      )}
+    </TextInput>
+  );
 };
 
 const Button = ({ onPress, enabled = true, children }) => {
@@ -190,6 +262,8 @@ const HooksTouchableExamples = () => {
           />
         </Animated.View>
       </GreenCheckbox>
+      <Input />
+      <Input />
     </View>
   );
 
