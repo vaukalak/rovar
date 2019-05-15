@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
-import circleAnimationEnhancer from '../lib/enhancers/circleAnimationEnhancer';
-import { backgroundColorStyleCreator } from '../lib/enhancers/styles/backgroundColorEnhancer';
-import { colorStyleCreator } from '../lib/enhancers/styles/colorStyleEnhancer';
-import { opacityStyleCreator } from '../lib/enhancers/styles/opacityEnhancer';
-import { rotateStyleCreator } from '../lib/enhancers/styles/rotateEnhancer';
-import firstChildEnhancer from '../lib/enhancers/firstChildEnhancer';
-import { scaleStyleCreator } from '../lib/enhancers/styles/scaleEnhancer';
-import compose from '../lib/compose';
+import circleAnimationEnhancer from '../lib/enhancers/misc/circleAnimationEnhancer';
+import backgroundColor from '../lib/styles/backgroundColor';
+import color from '../lib/styles/color';
+import opacity from '../lib/styles/opacity';
+import rotate from '../lib/styles/rotate';
+import firstChildEnhancer from '../lib/enhancers/children/firstChildEnhancer';
+import scale from '../lib/styles/scale';
+import compose from '../lib/enhancers/compose';
 import styleEnhancer from '../lib/enhancers/styleEnhancer';
-import {translateStyleCreator} from '../lib/enhancers/styles/translateEnhancer';
-import { createTouchableComponent } from '../lib/components/Touchable';
-import touchEnhancer from '../lib/enhancers/touchEnhancer';
+import translateY from '../lib/styles/translateY';
+import { createTouchableComponent } from '../lib/controllers/TouchableController';
+import touchEnhancer from '../lib/enhancers/states/touchEnhancer';
 
 const easing = Easing.out(Easing.back(1));
 
@@ -41,13 +41,13 @@ const CircleAnimationTouchable = createTouchableComponent(
   touchEnhancer(
     compose(
       styleEnhancer(
-        scaleStyleCreator(1, 0.95),
+        scale(1, 0.95),
       ),
       firstChildEnhancer(
         styleEnhancer(
-          scaleStyleCreator(1, 0.95),
-          translateStyleCreator(3),
-          colorStyleCreator('#FFFFFF'),
+          scale(1, 0.95),
+          translateY(3),
+          color('#FFFFFF'),
         ),
       ),
       circleAnimationEnhancer('#8f0013'),
@@ -56,10 +56,12 @@ const CircleAnimationTouchable = createTouchableComponent(
 );
 
 const ScaleOpacityTouchable = createTouchableComponent(
-  touchEnhancer(
-    styleEnhancer(
-      opacityStyleCreator(0.4),
-      scaleStyleCreator(1, 0.97),
+  compose(
+    touchEnhancer(
+      styleEnhancer(
+        opacity(0.4),
+        scale(1, 0.94),
+      ),
     ),
   ),
 );
@@ -68,15 +70,15 @@ const FlipAndTintTouchable = createTouchableComponent(
   touchEnhancer(
     compose(
       styleEnhancer(
-        scaleStyleCreator(1, 1.2),
-        backgroundColorStyleCreator(),
-        rotateStyleCreator(10),
+        scale(1, 1.2),
+        backgroundColor(),
+        rotate(10),
       ),
       firstChildEnhancer(
         styleEnhancer(
-          colorStyleCreator('#FFFFFF'),
-          scaleStyleCreator(1, 0.5),
-          rotateStyleCreator(-20),
+          color('#FFFFFF'),
+          scale(1, 0.5),
+          rotate(-20),
         ),
       ),
     ),
