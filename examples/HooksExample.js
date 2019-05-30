@@ -39,6 +39,14 @@ const HooksTouchableExamples = () => {
         {!firstEnabled ? `(ENABLED)` : `(DISABLED)`}
       </Button>
       <Checkbox />
+      <Checkbox />
+      <Checkbox />
+      <Checkbox />
+      <Checkbox />
+      <Checkbox />
+      <Checkbox />
+      <Checkbox />
+      <Checkbox />
       <TextInput />
       <TextInput />
     </View>
