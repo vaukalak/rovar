@@ -38,15 +38,66 @@ const HooksTouchableExamples = () => {
         {`ENABLE FIRST\n`}
         {!firstEnabled ? `(ENABLED)` : `(DISABLED)`}
       </Button>
-      <Checkbox />
-      <Checkbox />
-      <Checkbox />
-      <Checkbox />
-      <Checkbox />
-      <Checkbox />
-      <Checkbox />
-      <Checkbox />
-      <Checkbox />
+      <View style={{ flexDirection: 'row'}}>
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+      </View>
+      <View style={{ flexDirection: 'row'}}>
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+      </View>
+      <View style={{ flexDirection: 'row'}}>
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+      </View>
+      <View style={{ flexDirection: 'row'}}>
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+      </View>
+      <View style={{ flexDirection: 'row'}}>
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+      </View>
+      <View style={{ flexDirection: 'row'}}>
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+        <Checkbox />
+      </View>
       <TextInput />
       <TextInput />
     </View>
